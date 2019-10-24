@@ -1,14 +1,36 @@
 import React from 'react';
-import { Provider, ReactReduxContext } from 'react-redux';
+import { Provider, ReactReduxContext, useSelector } from 'react-redux';
 import { Canvas } from 'react-three-fiber';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+
 import * as THREE from 'three';
-import Sobel from '../components/Effects/Sobel';
+import Sobel from './Effects/Sobel';
 
 import PlateScene from '../Scenes/PlateScene';
 import Controls from './Controls';
 import StudioLighting from './Lights/StudioLighting';
+import Fade from './Animation/Fade';
+
+const ViewerContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+const CanvasContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+`;
+
+const LoadingOverlay = styled(Fade)`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  background: white;
+`;
 
 const cameraOpts = {
   fov: 45,
@@ -27,25 +49,24 @@ const onCanvasCreated = ({ gl }) => {
   gl.setPixelRatio(window.devicePixelRatio);
 };
 
-const CanvasContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
 const Viewer = () => {
+  const loaded = useSelector(state => state.loaded);
   return (
     <ReactReduxContext.Consumer>
       {({ store }) => (
-        <CanvasContainer>
-          <Canvas camera={cameraOpts} onCreated={onCanvasCreated}>
-            <Provider store={store}>
-              <Controls />
-              <StudioLighting />
-              <PlateScene />
-              <Sobel />
-            </Provider>
-          </Canvas>
-        </CanvasContainer>
+        <ViewerContainer>
+          <LoadingOverlay visible={loaded} />
+          <CanvasContainer>
+            <Canvas camera={cameraOpts} onCreated={onCanvasCreated}>
+              <Provider store={store}>
+                <Controls />
+                <StudioLighting />
+                <PlateScene />
+                <Sobel />
+              </Provider>
+            </Canvas>
+          </CanvasContainer>
+        </ViewerContainer>
       )}
     </ReactReduxContext.Consumer>
   );

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLoader } from 'react-three-fiber';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
@@ -36,6 +36,9 @@ const PlateScene = ({ HDRTexture }) => {
   gltf.__$[2].material.envMap = null;
   gltf.__$[2].material.needsUpdate = false;
   gltf.__$[2].material.alphaTest = 0.01;
+
+  const dispatch = useDispatch();
+  dispatch({ type: 'LOADED' });
 
   return (
     <group ref={group}>

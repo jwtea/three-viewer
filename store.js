@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
   text: 'Dynamic text',
+  loaded: false,
   lights: false,
   effects: false,
   background: false,
@@ -10,6 +11,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'LOADED':
+      return {
+        ...state,
+        loaded: true,
+      };
     case 'UPDATE_TEXT':
       return {
         ...state,
