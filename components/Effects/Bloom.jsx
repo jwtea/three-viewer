@@ -14,7 +14,7 @@ export default () => {
   const { gl, scene, camera, size } = useThree();
   const composer = useRef();
 
-  const params = [[window.innerWidth, window.innerHeight], 0.3, 0.4, 0.85];
+  const params = [[size.width, size.height], 0.3, 0.4, 0.85];
   useEffect(() => void composer.current.setSize(size.width, size.height), [
     size,
   ]);

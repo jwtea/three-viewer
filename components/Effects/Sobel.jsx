@@ -27,9 +27,9 @@ export default () => {
   useFrame(
     () => {
       sobel.current.uniforms.resolution.value.x =
-        window.innerWidth * window.devicePixelRatio;
+        size.width * window.devicePixelRatio;
       sobel.current.uniforms.resolution.value.y =
-        window.innerHeight * window.devicePixelRatio;
+        size.height * window.devicePixelRatio;
 
       composer.current.render();
     },
