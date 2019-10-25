@@ -7,11 +7,13 @@ import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader';
+import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass';
 
 extend({
   EffectComposer,
   RenderPass,
   OutlinePass,
+  SMAAPass,
   ShaderPass,
 });
 
@@ -19,7 +21,6 @@ export default () => {
   const { gl, scene, camera, size } = useThree();
 
   const composer = useRef();
-  const outlineRef = useRef();
 
   const hoveredObjects = useSelector(state => state.hoveredObjects);
 
@@ -36,13 +37,17 @@ export default () => {
       <outlinePass
         visibleEdgeColor="blue"
         edgeStrength={10}
-        edgeThickness={2}
+        edgeThickness={5}
         attachArray="passes"
         selectedObjects={hoveredObjects}
-        ref={outlineRef}
         args={[aspect, scene, camera]}
       />
+      {/* <sMAAPass
+        attachArray="passes"
+        args={[size.width * pixelRatio, size.height * pixelRatio]}
+      /> */}
       <shaderPass
+        renderToScreen={false}
         attachArray="passes"
         args={[FXAAShader]}
         uniforms-resolution-value={[

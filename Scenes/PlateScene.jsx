@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLoader } from 'react-three-fiber';
+import { a } from '@react-spring/three';
+import { useSpring, config } from '@react-spring/core';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -15,6 +17,13 @@ const PlateScene = ({ HDRTexture }) => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/gltf/');
     loader.setDRACOLoader(dracoLoader);
+  });
+
+  const [hovered, setHovered] = useState(false);
+
+  const { scale } = useSpring({
+    scale: hovered ? 1.2 : 1,
+    config: config.stiff,
   });
 
   /* eslint no-underscore-dangle: ["error", { "allow": ["__$"] }] */
@@ -41,12 +50,17 @@ const PlateScene = ({ HDRTexture }) => {
 
   return (
     <group>
-      <mesh
+      <a.mesh
+        scale={scale.interpolate(s => [s, s, s])}
         ref={plate}
-        onPointerOver={() =>
-          dispatch({ type: 'HOVERED_MESH', mesh: plate.current })
-        }
-        onPointerOut={() => dispatch({ type: 'HOVERED_MESH_LEFT' })}
+        onPointerOver={() => {
+          setHovered(true);
+          dispatch({ type: 'HOVERED_MESH', mesh: plate.current });
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          dispatch({ type: 'HOVERED_MESH_LEFT' });
+        }}
         receiveShadow={lights}
         castShadow={lights}
         name="Disc"
@@ -57,7 +71,7 @@ const PlateScene = ({ HDRTexture }) => {
           {...gltf.__$[1].material}
           name="Mat"
         />
-      </mesh>
+      </a.mesh>
       <mesh receiveShadow={lights} castShadow={lights} name="MSBR_11">
         <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
         <meshStandardMaterial

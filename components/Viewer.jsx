@@ -32,6 +32,13 @@ const LoadingOverlay = styled(Fade)`
   background: white;
 `;
 
+const cameraOpts = {
+  fov: 45,
+  near: 0.001,
+  far: 100000,
+  position: [10, 10, 10],
+};
+
 const onCanvasCreated = ({ gl }) => {
   /* eslint no-param-reassign: "error" */
   gl.shadowMap.enabled = true;
@@ -51,7 +58,7 @@ const Viewer = () => {
           <LoadingOverlay visible={loaded} />
           <CanvasContainer>
             <Canvas
-              antialias
+              camera={cameraOpts}
               pixelRatio={window.devicePixelRatio}
               onCreated={onCanvasCreated}
             >
