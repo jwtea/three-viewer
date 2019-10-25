@@ -15,9 +15,7 @@ export default () => {
   const composer = useRef();
 
   const params = [[size.width, size.height], 0.3, 0.4, 0.85];
-  useEffect(() => void composer.current.setSize(size.width, size.height), [
-    size,
-  ]);
+  useEffect(() => composer.current.setSize(size.width, size.height), [size]);
   useFrame(() => {
     composer.current.render();
   }, 1);

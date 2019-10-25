@@ -21,9 +21,7 @@ extend({
 export default () => {
   const { gl, scene, camera, size } = useThree();
   const composer = useRef();
-  useEffect(() => void composer.current.setSize(size.width, size.height), [
-    size,
-  ]);
+  useEffect(() => composer.current.setSize(size.width, size.height), [size]);
   useFrame(() => composer.current.render(), 1);
 
   return (

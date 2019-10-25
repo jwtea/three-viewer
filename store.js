@@ -6,11 +6,22 @@ const initialState = {
   loaded: false,
   lights: false,
   effects: false,
+  hoveredObjects: [],
   background: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'HOVERED_MESH':
+      return {
+        ...state,
+        hoveredObjects: [action.mesh],
+      };
+    case 'HOVERED_MESH_LEFT':
+      return {
+        ...state,
+        hoveredObjects: [],
+      };
     case 'LOADED':
       return {
         ...state,

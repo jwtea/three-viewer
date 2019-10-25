@@ -6,12 +6,11 @@ import { useLoader } from 'react-three-fiber';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-
 import HDR from '../components/Lights/HDRScene';
 
 const PlateScene = ({ HDRTexture }) => {
   const lights = useSelector(state => state.lights);
-  const group = useRef();
+  const plate = useRef();
   const gltf = useLoader(GLTFLoader, '/PlateTest.glb', loader => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('/draco/gltf/');
@@ -41,25 +40,32 @@ const PlateScene = ({ HDRTexture }) => {
   dispatch({ type: 'LOADED' });
 
   return (
-    <group ref={group}>
-      <scene>
-        <mesh receiveShadow={lights} castShadow={lights} name="Disc">
-          <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
-          <meshStandardMaterial
-            attach="material"
-            {...gltf.__$[1].material}
-            name="Mat"
-          />
-        </mesh>
-        <mesh receiveShadow={lights} castShadow={lights} name="MSBR_11">
-          <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
-          <meshStandardMaterial
-            attach="material"
-            {...gltf.__$[2].material}
-            name="Mat.1"
-          />
-        </mesh>
-      </scene>
+    <group>
+      <mesh
+        ref={plate}
+        onPointerOver={() =>
+          dispatch({ type: 'HOVERED_MESH', mesh: plate.current })
+        }
+        onPointerOut={() => dispatch({ type: 'HOVERED_MESH_LEFT' })}
+        receiveShadow={lights}
+        castShadow={lights}
+        name="Disc"
+      >
+        <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
+        <meshStandardMaterial
+          attach="material"
+          {...gltf.__$[1].material}
+          name="Mat"
+        />
+      </mesh>
+      <mesh receiveShadow={lights} castShadow={lights} name="MSBR_11">
+        <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
+        <meshStandardMaterial
+          attach="material"
+          {...gltf.__$[2].material}
+          name="Mat.1"
+        />
+      </mesh>
     </group>
   );
 };

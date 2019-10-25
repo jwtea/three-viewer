@@ -6,8 +6,8 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 
 import { useSelector } from 'react-redux';
 
-import { LuminosityShader } from 'three/examples/jsm/shaders/LuminosityShader.js';
-import { SobelOperatorShader } from 'three/examples/jsm/shaders/SobelOperatorShader.js';
+import { LuminosityShader } from 'three/examples/jsm/shaders/LuminosityShader';
+import { SobelOperatorShader } from 'three/examples/jsm/shaders/SobelOperatorShader';
 
 extend({
   EffectComposer,
@@ -17,31 +17,25 @@ extend({
 
 export default () => {
   const { gl, scene, camera, size } = useThree();
+
   const composer = useRef();
-  const sobel = useRef();
 
   const effects = useSelector(state => state.effects);
-  useEffect(() => void composer.current.setSize(size.width, size.height), [
-    size,
-  ]);
-  useFrame(
-    () => {
-      sobel.current.uniforms.resolution.value.x =
-        size.width * window.devicePixelRatio;
-      sobel.current.uniforms.resolution.value.y =
-        size.height * window.devicePixelRatio;
 
-      composer.current.render();
-    },
-    effects ? 1 : 0
-  );
+  const pixelRatio = gl.getPixelRatio();
+
+  useEffect(() => composer.current.setSize(size.width, size.height), [size]);
+  useFrame(() => composer.current.render(), effects ? 1 : 0);
 
   return (
     <effectComposer ref={composer} args={[gl]}>
       <renderPass attachArray="passes" args={[scene, camera]} />
       <shaderPass attachArray="passes" args={[LuminosityShader]} />
       <shaderPass
-        ref={sobel}
+        uniforms-resolution-value={[
+          size.width * pixelRatio,
+          size.height * pixelRatio,
+        ]}
         attachArray="passes"
         args={[SobelOperatorShader]}
       />

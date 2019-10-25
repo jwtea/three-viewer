@@ -2,14 +2,14 @@ import React from 'react';
 import { Provider, ReactReduxContext, useSelector } from 'react-redux';
 import { Canvas } from 'react-three-fiber';
 import styled from 'styled-components';
-
 import * as THREE from 'three';
-import Sobel from './Effects/Sobel';
 
 import PlateScene from '../Scenes/PlateScene';
-import Controls from './Controls';
-import StudioLighting from './Lights/StudioLighting';
 import Fade from './Animation/Fade';
+import Controls from './Controls';
+import Outline from './Effects/Outline';
+import Sobel from './Effects/Sobel';
+import StudioLighting from './Lights/StudioLighting';
 
 const ViewerContainer = styled.div`
   width: 100%;
@@ -32,13 +32,6 @@ const LoadingOverlay = styled(Fade)`
   background: white;
 `;
 
-const cameraOpts = {
-  fov: 45,
-  near: 0.001,
-  far: 100000,
-  position: [10, 10, 10],
-};
-
 const onCanvasCreated = ({ gl }) => {
   /* eslint no-param-reassign: "error" */
   gl.shadowMap.enabled = true;
@@ -57,11 +50,16 @@ const Viewer = () => {
         <ViewerContainer>
           <LoadingOverlay visible={loaded} />
           <CanvasContainer>
-            <Canvas camera={cameraOpts} onCreated={onCanvasCreated}>
+            <Canvas
+              antialias
+              pixelRatio={window.devicePixelRatio}
+              onCreated={onCanvasCreated}
+            >
               <Provider store={store}>
                 <Controls />
                 <StudioLighting />
                 <PlateScene />
+                <Outline />
                 <Sobel />
               </Provider>
             </Canvas>
