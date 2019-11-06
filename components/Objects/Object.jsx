@@ -15,7 +15,8 @@ export default ({ objKey, meshes }) => {
   const { posAnim, opacityAnim } = useSpring({
     posAnim: activeObject === objKey ? 0 : 10,
     opacityAnim: activeObject === objKey ? 1 : 0,
-    config: { ...config.slow },
+    config: config.gentle,
+
     onRest: () =>
       dispatch({
         type: activeObject === objKey ? 'ITEM_DISPLAYED' : 'ITEM_HIDDEN',
@@ -28,7 +29,7 @@ export default ({ objKey, meshes }) => {
   }, [activeObject]);
 
   return (
-    <a.group position={posAnim.interpolate(p => [p * direc, 0, 0])}>
+    <a.object3D position={posAnim.to(p => [p * direc, 0, 0])}>
       {meshes.map(mesh => (
         <AnimatedOpacityMesh
           key={mesh.name + objKey}
@@ -36,6 +37,6 @@ export default ({ objKey, meshes }) => {
           opacity={opacityAnim}
         />
       ))}
-    </a.group>
+    </a.object3D>
   );
 };

@@ -4,7 +4,7 @@ import { Canvas } from 'react-three-fiber';
 import styled from 'styled-components';
 import * as THREE from 'three';
 
-import MultiplePlateScene from '../Scenes/MultiplePlateScene';
+import DynamicObjectScene from '../Scenes/DynamicObjectScene';
 import Fade from './Animation/Fade';
 import ExtendedControls from './ExtendedControls';
 import Outline from './Effects/Outline';
@@ -23,7 +23,7 @@ const CanvasContainer = styled.div`
   z-index: 0;
 `;
 
-const LoadingOverlay = styled(Fade)`
+const StyledLoadingOverlay = styled(Fade)`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -49,13 +49,17 @@ const onCanvasCreated = ({ gl }) => {
   gl.setPixelRatio(window.devicePixelRatio);
 };
 
-const Viewer = () => {
+const LoadingOverlay = () => {
   const loaded = useSelector(state => state.loaded);
+  return <StyledLoadingOverlay visible={loaded} />;
+};
+
+const Viewer = () => {
   return (
     <ReactReduxContext.Consumer>
       {({ store }) => (
         <ViewerContainer>
-          <LoadingOverlay visible={loaded} />
+          <LoadingOverlay />
           <CanvasContainer>
             <Canvas
               camera={cameraOpts}
@@ -64,10 +68,10 @@ const Viewer = () => {
             >
               <Provider store={store}>
                 <ExtendedControls />
-                {/* <StudioLighting /> */}
-                <MultiplePlateScene />
-                {/* <Outline /> */}
-                {/* <Sobel /> */}
+                <StudioLighting />
+                <DynamicObjectScene glbURI="/CarouselTest.glb" />
+                <Outline />
+                <Sobel />
               </Provider>
             </Canvas>
           </CanvasContainer>

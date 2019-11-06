@@ -21,3 +21,27 @@ export const mapEnv = (gltf, HDRTexture) => {
     return obj;
   });
 };
+
+/**
+ * Extract product heirachies from the gltf file.
+ * @param {*} gltf
+ */
+export const mapProducts = gltf => {
+  const products = [];
+  let pIdx = 0;
+
+  gltf.__$.map(obj => {
+    if (obj.name.includes('PRODUCT')) {
+      products[pIdx] = {
+        key: obj.name,
+        objects: [],
+      };
+      pIdx++;
+    } else if (products[pIdx - 1] !== undefined) {
+      products[pIdx - 1].objects.push(obj);
+    }
+    return obj;
+  });
+
+  return products;
+};

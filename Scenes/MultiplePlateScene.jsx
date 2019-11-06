@@ -1,17 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { config, useSpring } from '@react-spring/core';
-import { a } from '@react-spring/three';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLoader } from 'react-three-fiber';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import AnimatedOpacityMesh from '../components/Animation/Meshes/AnimatedOpacityMesh';
-import Object from '../components/Objects/Object';
-
 import HDR from '../components/Lights/HDRScene';
+import Object from '../components/Objects/Object';
 import { mapEnv } from '../Helpers/Loading';
 
 const MultiplePlateScene = ({ HDRTexture }) => {

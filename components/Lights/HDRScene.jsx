@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { cloneElement, Suspense } from 'react';
-import { useLoader, useThree } from 'react-three-fiber';
+import React, { cloneElement, Suspense, useEffect } from 'react';
+import { useLoader, useThree, useRender } from 'react-three-fiber';
 import * as THREE from 'three';
 import { HDRCubeTextureLoader } from 'three/examples/jsm/loaders/HDRCubeTextureLoader';
 import { PMREMCubeUVPacker } from 'three/examples/jsm/pmrem/PMREMCubeUVPacker';
@@ -33,7 +33,9 @@ const HDRScene = ({ HDRPath, imagePaths, children }) => {
   pmremGenerator.dispose();
   pmremCubeUVPacker.dispose();
 
-  scene.background = background ? cubeMapText : null;
+  useEffect(() => {
+    scene.background = background ? cubeMapText : null;
+  }, [background]);
 
   return (
     <>

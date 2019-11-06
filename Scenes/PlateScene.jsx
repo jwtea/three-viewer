@@ -1,13 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { config, useSpring } from '@react-spring/core';
+import { a } from '@react-spring/three';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLoader } from 'react-three-fiber';
-import { a } from '@react-spring/three';
-import { useSpring, config } from '@react-spring/core';
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
 import HDR from '../components/Lights/HDRScene';
 
 const PlateScene = ({ HDRTexture }) => {
@@ -51,7 +52,7 @@ const PlateScene = ({ HDRTexture }) => {
   return (
     <group>
       <a.mesh
-        scale={scale.interpolate(s => [s, s, s])}
+        scale={scale.to(s => [s, s, s])}
         ref={plate}
         onPointerOver={() => {
           setHovered(true);
