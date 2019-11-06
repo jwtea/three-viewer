@@ -27,6 +27,9 @@ export default () => {
   const dispatch = useDispatch();
   return (
     <>
+      <Button onClick={() => dispatch({ type: 'NEXT_ITEM' })} type="button">
+        Next Item
+      </Button>
       <Button onClick={() => dispatch({ type: 'TOGGLE_LIGHTS' })} type="button">
         Lights
       </Button>

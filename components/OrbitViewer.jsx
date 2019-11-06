@@ -4,9 +4,9 @@ import { Canvas } from 'react-three-fiber';
 import styled from 'styled-components';
 import * as THREE from 'three';
 
-import MultiplePlateScene from '../Scenes/MultiplePlateScene';
+import PlateScene from '../Scenes/PlateScene';
 import Fade from './Animation/Fade';
-import ExtendedControls from './ExtendedControls';
+import Controls from './Controls';
 import Outline from './Effects/Outline';
 import Sobel from './Effects/Sobel';
 import StudioLighting from './Lights/StudioLighting';
@@ -63,9 +63,9 @@ const Viewer = () => {
               onCreated={onCanvasCreated}
             >
               <Provider store={store}>
-                <ExtendedControls />
+                <Controls />
                 {/* <StudioLighting /> */}
-                <MultiplePlateScene />
+                <PlateScene />
                 {/* <Outline /> */}
                 {/* <Sobel /> */}
               </Provider>

@@ -43,10 +43,10 @@ const PlateScene = ({ HDRTexture }) => {
 
   gltf.__$[2].material.envMap = null;
   gltf.__$[2].material.needsUpdate = false;
-  gltf.__$[2].material.alphaTest = 0.01;
+  gltf.__$[2].material.alphaTest = 0.001;
 
   const dispatch = useDispatch();
-  dispatch({ type: 'LOADED' });
+  dispatch({ type: 'LOADED', objects: [] });
 
   return (
     <group>

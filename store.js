@@ -1,5 +1,8 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+
+import sagas from './sagas';
 
 const initialState = {
   text: 'Dynamic text',
@@ -8,10 +11,32 @@ const initialState = {
   effects: false,
   hoveredObjects: [],
   background: false,
+  resetCamera: false,
+  objects: [],
+  activeObject: null,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SHOW_NEXT_ITEM': {
+      const currIdx = state.objects.indexOf(state.activeObject);
+      const nextIdx = currIdx + 1 < state.objects.length ? currIdx + 1 : 0;
+
+      return {
+        ...state,
+        activeObject: state.objects[nextIdx],
+      };
+    }
+    case 'RESET_CAMERA':
+      return {
+        ...state,
+        resetCamera: true,
+      };
+    case 'CAMERA_RESET':
+      return {
+        ...state,
+        resetCamera: false,
+      };
     case 'HOVERED_MESH':
       return {
         ...state,
@@ -22,11 +47,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         hoveredObjects: [],
       };
-    case 'LOADED':
+    case 'LOADED': {
       return {
         ...state,
+        objects: action.objects,
+        activeObject: action.objects[0],
         loaded: true,
       };
+    }
     case 'UPDATE_TEXT':
       return {
         ...state,
@@ -53,10 +81,14 @@ const reducer = (state = initialState, action) => {
   }
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 export const initializeStore = (preloadedState = initialState) => {
-  return createStore(
+  const store = createStore(
     reducer,
     preloadedState,
-    composeWithDevTools(applyMiddleware())
+    composeWithDevTools(applyMiddleware(sagaMiddleware))
   );
+  sagaMiddleware.run(sagas);
+  return store;
 };
