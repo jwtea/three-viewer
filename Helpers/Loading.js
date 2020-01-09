@@ -31,7 +31,7 @@ export const mapProducts = gltf => {
   let pIdx = 0;
 
   gltf.__$.map(obj => {
-    if (obj.name.includes('PRODUCT')) {
+    if (obj.name.includes('Product')) {
       products[pIdx] = {
         key: obj.name,
         objects: [],

@@ -44,6 +44,7 @@ const onCanvasCreated = ({ gl }) => {
   gl.shadowMap.enabled = true;
   gl.shadowMap.type = THREE.PCFShadowMap;
   gl.gammaOutput = true;
+  gl.gammaFactor = 2.2;
   gl.toneMappingExposure = 1.0;
   /* eslint-env browser */
   gl.setPixelRatio(window.devicePixelRatio);
@@ -62,6 +63,7 @@ const Viewer = () => {
           <LoadingOverlay />
           <CanvasContainer>
             <Canvas
+              className="wo"
               camera={cameraOpts}
               pixelRatio={window.devicePixelRatio}
               onCreated={onCanvasCreated}
@@ -69,7 +71,7 @@ const Viewer = () => {
               <Provider store={store}>
                 <ExtendedControls />
                 <StudioLighting />
-                <DynamicObjectScene glbURI="/CarouselTest.glb" />
+                <DynamicObjectScene glbURI="/MiniFrag.glb" />
                 <Outline />
                 <Sobel />
               </Provider>

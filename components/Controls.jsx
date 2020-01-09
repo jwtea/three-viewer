@@ -17,13 +17,13 @@ const Controls = () => {
   return (
     <orbitControls
       ref={ref}
-      autoRotate
-      enableZoom={false}
-      maxZoom={0}
-      maxDistance={3.6}
-      enablePan={false}
-      maxPolarAngle={Math.PI / 2}
-      minPolarAngle={0}
+      autoRotate={false}
+      enableZoom
+      // maxZoom={0}
+      // maxDistance={3.6}
+      enablePan
+      // maxPolarAngle={Math.PI / 2}
+      // minPolarAngle={0}
       target={[0, 0.7, 0]}
       enableDamping
       args={[camera, gl.domElement]}

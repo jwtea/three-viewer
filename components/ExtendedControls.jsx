@@ -56,6 +56,8 @@ const Controls = () => {
       minDistance={1}
       maxDistance={6}
       dampingFactor={0.3}
+      maxPolarAngle={Math.PI / 2}
+      minPolarAngle={0}
       enabled={!resetCamera}
       enableDamping
       args={[camera, gl.domElement]}

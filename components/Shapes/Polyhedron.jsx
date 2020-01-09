@@ -33,12 +33,13 @@ const Polyhedron = ({ position, rotation, color }) => {
 };
 
 Polyhedron.propTypes = {
-  position: PropTypes.array.isRequired,
+  position: PropTypes.array,
   rotation: PropTypes.array,
   color: PropTypes.string,
 };
 
 Polyhedron.defaultProps = {
+  position: [0, 0, 0],
   rotation: [0, 0, 0],
   color: 'blue',
 };

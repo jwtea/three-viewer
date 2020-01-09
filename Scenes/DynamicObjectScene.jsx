@@ -65,7 +65,7 @@ DynamicObjectScene.defaultProps = {
 };
 
 const imagePaths = ['px.hdr', 'nx.hdr', 'py.hdr', 'ny.hdr', 'pz.hdr', 'nz.hdr'];
-const HDRPath = '/textures/hdr/studio/';
+const HDRPath = '/textures/hdr/cube/';
 
 export default ({ glbURI }) => (
   <HDR HDRPath={HDRPath} imagePaths={imagePaths} enableBackground={false}>

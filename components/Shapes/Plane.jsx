@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Plane = ({ position, onClick, rotation }) => {
   return (
     <mesh onClick={onClick} position={position} rotation={rotation}>
-      <planeBufferGeometry attach="geometry" args={[5, 5]} />
+      <planeBufferGeometry attach="geometry" args={[10, 10]} />
       <meshBasicMaterial
         attach="material"
         color="black"
