@@ -19,7 +19,7 @@ const Triangles = ({ position, onClick, rotation }) => {
   const { size } = useThree();
   const geom = useRef();
 
-  const gridSize = 10;
+  const gridSize = 100;
   const width = Math.ceil(size.width / gridSize);
   const height = Math.ceil(size.height / gridSize);
 
@@ -30,22 +30,25 @@ const Triangles = ({ position, onClick, rotation }) => {
   const cellSize = 18;
   const noise = 1;
   const speed = 1;
-  const waveHeight = 15;
+  const waveHeight = 20;
 
   const colors = [
-    new THREE.Color(0xff0000),
-    new THREE.Color(0x00ff00),
-    new THREE.Color(0x0000ff),
+    new THREE.Color(0x50514f),
+    new THREE.Color(0xf25f5c),
+    new THREE.Color(0xffe066),
+    new THREE.Color(0x247ba0),
+    new THREE.Color(0x70c1b3),
   ];
 
   for (let i = 0; i <= width; i++) {
     grid[i] = [];
     for (let j = 0; j <= height; j++) {
       const id = verts.length;
+      const rnd = rn(0, noise);
       const newVertex = new THREE.Vector3(
-        (i - width * 0.5) * cellSize,
-        rn(0, noise) - 10,
-        (height * 0.5 - j) * cellSize
+        (i - width * 0.5) * cellSize + rnd,
+        rnd,
+        (height * 0.5 - j) * cellSize + rnd
       );
       verts.push(newVertex);
       grid[i][j] = id;

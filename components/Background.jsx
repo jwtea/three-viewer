@@ -2,18 +2,17 @@ import React from 'react';
 import { Canvas } from 'react-three-fiber';
 import styled from 'styled-components';
 import * as THREE from 'three';
-import Controls from './Controls';
 
-import Triangles from './Shapes/Triangles';
-import Points from './Shapes/Points';
-import Polyhedron from './Shapes/Basic/Polyhedron';
+import Controls from './Controls';
 import PointLight from './Lights/Point';
+import Triangles from './Shapes/Triangles';
 
 const ViewerContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
 `;
+
 const CanvasContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -28,14 +27,12 @@ const cameraOpts = {
   position: [200, 200, 0],
 };
 
-// fov?: number, aspect?: number, near?: number, far?: number
-
 const onCanvasCreated = ({ gl }) => {
   /* eslint no-param-reassign: "error" */
   gl.shadowMap.enabled = true;
   gl.shadowMap.type = THREE.PCFShadowMap;
-  gl.gammaOutput = true;
-  gl.gammaFactor = 2.2;
+  // gl.gammaOutput = true;
+  // gl.gammaFactor = 2.2;
   gl.toneMappingExposure = 1.0;
   /* eslint-env browser */
   gl.setPixelRatio(window.devicePixelRatio);
@@ -50,7 +47,6 @@ const Background = () => {
           pixelRatio={window.devicePixelRatio}
           onCreated={onCanvasCreated}
         >
-          <ambientLight />
           <PointLight
             visible
             intensity={1}

@@ -1,4 +1,4 @@
-import { call, take, put, takeEvery } from 'redux-saga/effects';
+import { take, put, takeEvery } from 'redux-saga/effects';
 
 /**
  * Handle display of the next loaded item

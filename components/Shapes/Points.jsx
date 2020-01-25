@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
-import frag from '../../shaders/frag.glsl';
-import vert from '../../shaders/vert.glsl';
+import frag from '../../Shaders/frag.glsl';
+import vert from '../../Shaders/vert.glsl';
 
 function Points({ pointCount }) {
   const attrib = useRef();
