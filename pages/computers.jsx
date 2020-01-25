@@ -10,6 +10,27 @@ const Page = styled.div`
   color: ${({ theme }) => theme.colors.white};
 `;
 
+const CanvasContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+`;
+
+const Title = styled.h1`
+  color: white;
+  position: absolute;
+  font-weight: 800;
+  font-size: 8em;
+  margin: 0;
+  text-transform: uppercase;
+  z-index: 1;
+`;
+
 const ComputerViewer = dynamic(import('../components/ComputerViewer'), {
   ssr: false,
 });
@@ -17,7 +38,10 @@ const ComputerViewer = dynamic(import('../components/ComputerViewer'), {
 const IndexPage = () => {
   return (
     <Page>
-      <ComputerViewer />
+      <CanvasContainer>
+        <Title>User</Title>
+        <ComputerViewer />
+      </CanvasContainer>
     </Page>
   );
 };

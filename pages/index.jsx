@@ -69,7 +69,6 @@ const Viewer = dynamic(import('../components/Viewer'), {
 });
 
 const IndexPage = props => {
-  const text = useSelector(state => state.text);
   return (
     <Page>
       <HeaderSection>

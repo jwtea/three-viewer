@@ -31,7 +31,7 @@ const Viewer = () => {
       pixelRatio={window.devicePixelRatio}
       onCreated={onCanvasCreated}
     >
-      <Controls target={[0, 10, 0]} />
+      <Controls target={[0, 100, 0]} />
       <BadTV />
       <PointLight
         visible
@@ -40,8 +40,6 @@ const Viewer = () => {
         rotation={[-0.4173854870126512, 0.5551711881098526, 0.2645436633227689]}
       />
       <ComputerScene />
-      {/* <Outline /> */}
-      {/* <Sobel /> */}
     </Canvas>
   );
 };

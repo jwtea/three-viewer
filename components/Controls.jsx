@@ -5,7 +5,15 @@ import PropTypes from 'prop-types';
 
 extend({ OrbitControls });
 
-const Controls = ({ target, enableZoom }) => {
+const Controls = ({
+  target,
+  enableZoom,
+  autoRotate,
+  minDistance,
+  maxDistance,
+  maxPolarAngle,
+  minPolarAngle,
+}) => {
   const { camera, gl } = useThree();
   const ref = useRef();
 
@@ -18,13 +26,14 @@ const Controls = ({ target, enableZoom }) => {
   return (
     <orbitControls
       ref={ref}
-      autoRotate={false}
+      autoRotate={autoRotate}
       enableZoom={enableZoom}
       // maxZoom={0}
-      // maxDistance={3.6}
+      minDistance={minDistance}
+      maxDistance={maxDistance}
       enablePan
-      // maxPolarAngle={Math.PI / 2}
-      // minPolarAngle={0}
+      maxPolarAngle={maxPolarAngle}
+      minPolarAngle={minPolarAngle}
       target={target}
       enableDamping
       args={[camera, gl.domElement]}
@@ -34,12 +43,22 @@ const Controls = ({ target, enableZoom }) => {
 
 Controls.defaultProps = {
   target: [0, 0.7, 0],
+  minDistance: 200,
+  maxDistance: null,
   enableZoom: true,
+  autoRotate: false,
+  maxPolarAngle: Math.PI / 2,
+  minPolarAngle: 0,
 };
 
 Controls.propTypes = {
   target: PropTypes.array,
   enableZoom: PropTypes.bool,
+  autoRotate: PropTypes.bool,
+  minDistance: PropTypes.number,
+  maxDistance: PropTypes.number,
+  maxPolarAngle: PropTypes.number,
+  minPolarAngle: PropTypes.number,
 };
 
 export default Controls;
