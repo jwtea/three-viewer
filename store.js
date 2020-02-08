@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
+import { actionChannel } from 'redux-saga/effects';
 import sagas from './sagas';
 
 const initialState = {
@@ -12,8 +13,12 @@ const initialState = {
   hoveredObjects: [],
   background: false,
   resetCamera: false,
+  autoRotate: true,
   objects: [],
   activeObject: null,
+  enableBadTv: false,
+  controlsTarget: [0, 0, 0],
+  controlsPosition: [0, 100, 100],
 };
 
 const reducer = (state = initialState, action) => {
@@ -74,6 +79,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         background: !state.background,
+      };
+    case 'MONITOR_HOVERED':
+      return {
+        ...state,
+        enableBadTv: action.state,
+      };
+    case 'SET_CONTROLS':
+      return {
+        ...state,
+        controlsTarget: action.target,
+        controlsPosition: action.position,
+      };
+    case 'MONITOR_PRESSED':
+      return {
+        ...state,
+        controlsTarget: action.target,
+        controlsPosition: action.position,
+        autoRotate: false,
       };
 
     default:

@@ -17,44 +17,40 @@ extend({ CameraControls });
 const shouldRotate = (autoRotate, controls) =>
   autoRotate && controls.current._state !== 0;
 
-const Controls = () => {
+const Controls = ({ pTar, pPos }) => {
   const { camera, gl } = useThree();
   const controls = useRef();
   const resetCamera = useSelector(state => state.resetCamera);
   const dispatch = useDispatch();
   const clock = new THREE.Clock();
-
-  let autoRotate = true;
-  let resetDispatched = false;
+  const target = useSelector(state => state.controlsTarget);
+  const position = useSelector(state => state.controlsPosition);
+  const autoRotate = useSelector(state => state.autoRotate);
 
   useEffect(() => {
-    if (resetCamera) {
-      autoRotate = false;
-      controls.current.reset(true);
-    }
-  }, [resetCamera]);
+    dispatch({ type: 'SET_CONTROLS', target: pTar, position: pPos });
+  }, [pTar, pPos]);
+
+  useEffect(() => {
+    const positions = [].concat(...[position, target]);
+    positions.push(true);
+    controls.current.setLookAt(...positions);
+  }, [target, position]);
 
   useRender(() => {
     const delta = clock.getDelta();
 
-    if (shouldRotate(autoRotate, controls)) {
+    if (autoRotate) {
       controls.current.rotate(delta / 2, 0, true);
     }
 
-    // Will be false when there has been no movement
-    const updated = controls.current.update(delta);
-    if (updated === false && resetCamera && !resetDispatched) {
-      resetDispatched = true;
-      dispatch({ type: 'CAMERA_RESET_COMPLETE' });
-    }
+    controls.current.update(delta);
   });
 
   return (
     <cameraControls
       ref={controls}
       truckSpeed={0}
-      minDistance={1}
-      maxDistance={6}
       dampingFactor={0.3}
       maxPolarAngle={Math.PI / 2}
       minPolarAngle={0}

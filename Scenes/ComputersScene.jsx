@@ -4,6 +4,7 @@ import React, { useRef, Suspense } from 'react';
 import { useLoader } from 'react-three-fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { useDispatch } from 'react-redux';
 
 const ComputersScene = props => {
   const group = useRef();
@@ -13,6 +14,13 @@ const ComputersScene = props => {
     loader.setDRACOLoader(dracoLoader);
   });
 
+  const dispatch = useDispatch();
+
+  const onMonitorHover = (id, state) =>
+    dispatch({ type: 'MONITOR_HOVERED', id, state });
+
+  const onMonitorPress = (id, target, position) =>
+    dispatch({ type: 'MONITOR_PRESSED', id, target, position });
   return (
     <group ref={group} {...props}>
       <scene>
@@ -59,6 +67,13 @@ const ComputersScene = props => {
           </mesh>
         </object3D>
         <mesh
+          onClick={() =>
+            onMonitorPress(
+              5,
+              [-63.860862731933594, 105.26611328125, -26.79033660888672],
+              [-63.860862731933594, 105.26611328125, -100]
+            )
+          }
           name="Cube5"
           position={[-63.860862731933594, 108.26611328125, -26.79033660888672]}
           rotation={[
@@ -70,11 +85,14 @@ const ComputersScene = props => {
           <bufferGeometry attach="geometry" {...gltf.__$[7].geometry} />
           <meshStandardMaterial
             attach="material"
+            color="blue"
             {...gltf.__$[7].material}
             name="Steel - Worn Edges"
           />
         </mesh>
         <mesh
+          onPointerOver={() => onMonitorHover(4, true)}
+          onPointerOut={() => onMonitorHover(4, false)}
           name="Cube4"
           position={[-0.34899747371673584, 108.26611328125, -26.79033660888672]}
           rotation={[
@@ -91,6 +109,8 @@ const ComputersScene = props => {
           />
         </mesh>
         <mesh
+          onPointerOver={() => onMonitorHover(4, true)}
+          onPointerOut={() => onMonitorHover(4, false)}
           name="Cube3"
           position={[59.6510009765625, 108.26611328125, -26.79033660888672]}
           rotation={[

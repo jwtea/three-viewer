@@ -39,7 +39,7 @@ const IndexPage = () => {
   return (
     <Page>
       <CanvasContainer>
-        <Title>User</Title>
+        {/* <Title>User</Title> */}
         <ComputerViewer />
       </CanvasContainer>
     </Page>

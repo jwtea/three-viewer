@@ -8,6 +8,7 @@ import { CopyShader } from 'three/examples/jsm/shaders/CopyShader';
 import { FilmShader } from 'three/examples/jsm/shaders/FilmShader';
 import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader';
 
+import { useSelector } from 'react-redux';
 import BadTV from '../../Shaders/BadTV';
 import BadTVStatic from '../../Shaders/BadTV/Static';
 
@@ -24,19 +25,24 @@ export default () => {
   const shaderRef = useRef();
   const staticRef = useRef();
   const scanlineRef = useRef();
+  const enable = useSelector(state => state.enableBadTv);
 
-  useFrame(() => {
-    if (shaderRef.current) {
-      shaderRef.current.uniforms.time.value += clock.getDelta();
-    }
-    if (staticRef.current) {
-      staticRef.current.uniforms.time.value += clock.getDelta();
-    }
-    if (scanlineRef.current) {
-      scanlineRef.current.uniforms.time.value += clock.getDelta();
-    }
-    composer.current.render();
-  }, 1);
+  useFrame(
+    () => {
+      if (shaderRef.current) {
+        shaderRef.current.uniforms.time.value += clock.getDelta();
+      }
+      if (staticRef.current) {
+        staticRef.current.uniforms.time.value += clock.getDelta();
+      }
+      if (scanlineRef.current) {
+        scanlineRef.current.uniforms.time.value += clock.getDelta();
+      }
+
+      composer.current.render();
+    },
+    enable ? 1 : 0
+  );
 
   return (
     <effectComposer ref={composer} args={[gl]}>
