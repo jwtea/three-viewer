@@ -1,15 +1,15 @@
 import React, { useRef } from 'react';
-import { extend, useRender, useThree } from 'react-three-fiber';
+import { extend, useFrame, useThree } from 'react-three-fiber';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import PropTypes from 'prop-types';
 
 extend({ OrbitControls });
 
-const Controls = ({ target, enableZoom }) => {
+const Controls = ({ target, enableZoom, autoRotate }) => {
   const { camera, gl } = useThree();
   const ref = useRef();
 
-  useRender(() => {
+  useFrame(() => {
     /* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
     ref.current && ref.current.update();
     camera.updateMatrixWorld();
@@ -18,7 +18,8 @@ const Controls = ({ target, enableZoom }) => {
   return (
     <orbitControls
       ref={ref}
-      autoRotate={false}
+      autoRotate={autoRotate}
+      autoRotateSpeed={10}
       enableZoom={enableZoom}
       // maxZoom={0}
       // maxDistance={3.6}
@@ -33,13 +34,15 @@ const Controls = ({ target, enableZoom }) => {
 };
 
 Controls.defaultProps = {
-  target: [0, 0.7, 0],
+  target: [2, -1, 0],
   enableZoom: true,
+  autoRotate: false,
 };
 
 Controls.propTypes = {
   target: PropTypes.array,
   enableZoom: PropTypes.bool,
+  autoRotate: PropTypes.bool,
 };
 
 export default Controls;

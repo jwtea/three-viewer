@@ -5,22 +5,18 @@ const defaults = require('../defaults.json');
 
 const { vertices, indices } = defaults.poly;
 
-const radius = 0.1;
+const radius = 1;
 const detail = 2;
 
-const Polyhedron = ({ position, rotation, color }) => {
-
+const Polyhedron = ({ position, rotation, color, layers }) => {
   return (
-    <mesh
-      position={position}
-      rotation={rotation}
-    >
+    <mesh layers={layers} position={position} rotation={rotation}>
       <polyhedronBufferGeometry
         attach="geometry"
         args={[vertices, indices, radius, detail]}
       />
 
-      <meshBasicMaterial attach="material" color={color} />
+      <meshStandardMaterial attach="material" color={color} />
     </mesh>
   );
 };

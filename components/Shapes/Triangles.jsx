@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
-import { useRender, useThree } from 'react-three-fiber';
+import { useFrame, useThree } from 'react-three-fiber';
 import * as THREE from 'three';
 
 export function rn(start, end) {
@@ -79,7 +79,7 @@ const Triangles = ({ position, onClick, rotation }) => {
   }
 
   let step = 0;
-  useRender(() => {
+  useFrame(() => {
     step++;
     for (let i = 0; i < geom.current.vertices.length; i++) {
       const v = geom.current.vertices[i];

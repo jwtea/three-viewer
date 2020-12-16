@@ -11,7 +11,7 @@ import Polyhedron from '../Shapes/Polyhedron';
 
 const HDRScene = ({ HDRPath, imagePaths, children }) => {
   const { scene, gl } = useThree();
-  const background = useSelector(state => state.background);
+  // const background = useSelector(state => state.background);
   const [cubeMapText] = useLoader(
     HDRCubeTextureLoader,
     [imagePaths],
@@ -33,9 +33,9 @@ const HDRScene = ({ HDRPath, imagePaths, children }) => {
   pmremGenerator.dispose();
   pmremCubeUVPacker.dispose();
 
-  useEffect(() => {
-    scene.background = background ? cubeMapText : null;
-  }, [background]);
+  // useEffect(() => {
+  //   scene.background = background ? cubeMapText : null;
+  // }, [background]);
 
   return (
     <>
@@ -48,7 +48,7 @@ const HDRScene = ({ HDRPath, imagePaths, children }) => {
 
 const HDRSceneSuspense = ({ children, HDRPath, imagePaths }) => {
   return (
-    <Suspense fallback={<Polyhedron position={[0, 0, 0]} />}>
+    <Suspense fallback={null}>
       <HDRScene HDRPath={HDRPath} imagePaths={imagePaths}>
         {children}
       </HDRScene>

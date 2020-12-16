@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useRef, useEffect } from 'react';
-import { extend, useRender, useThree } from 'react-three-fiber';
+import { extend, useFrame, useThree } from 'react-three-fiber';
 import { useDispatch, useSelector } from 'react-redux';
 import CameraControls from 'camera-controls';
 import * as THREE from 'three';
@@ -34,7 +34,7 @@ const Controls = () => {
     }
   }, [resetCamera]);
 
-  useRender(() => {
+  useFrame(() => {
     const delta = clock.getDelta();
 
     if (shouldRotate(autoRotate, controls)) {

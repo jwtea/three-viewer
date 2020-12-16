@@ -1,5 +1,4 @@
-import { config, useSpring } from '@react-spring/core';
-import { a } from '@react-spring/three';
+import { a, useSpring, config } from '@react-spring/three';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 

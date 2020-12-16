@@ -3,6 +3,7 @@ import { extend, useThree } from 'react-three-fiber';
 import { Object3D } from 'three';
 
 extend({ Object3D });
+
 export default () => {
   const { scene } = useThree();
   const light = useRef();

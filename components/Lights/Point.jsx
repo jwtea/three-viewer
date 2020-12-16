@@ -38,9 +38,9 @@ Point.propTypes = {
   castShadow: PropTypes.bool,
   debug: PropTypes.bool,
   color: PropTypes.string,
-  position: PropTypes.array.isRequired,
+  position: PropTypes.array,
   intensity: PropTypes.number,
-  rotation: PropTypes.array.isRequired,
+  rotation: PropTypes.array,
   visible: PropTypes.bool,
   shadowMapDimensions: PropTypes.number,
 };
@@ -51,7 +51,9 @@ Point.defaultProps = {
   debug: false,
   color: 'white',
   intensity: 1,
-  visible: false,
+  visible: true,
+  position: [0, 0, 0],
+  rotation: [0, 0, 0],
   shadowMapDimensions: 1024,
 };
 
